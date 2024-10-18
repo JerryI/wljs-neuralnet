@@ -79,7 +79,7 @@ applyPatch := With[{},
 
         Unprotect[NeuralNetworks`Private`NetGraph`makeNetGraphBoxes];
         ClearAll[NeuralNetworks`Private`NetGraph`makeNetGraphBoxes];
-        
+
         NeuralNetworks`Private`NetGraph`makeNetGraphBoxes[c_] := With[{msg = Style["We are looking for volunteers to implement NetGraph", Italic, Background->Yellow]},
           MakeBoxes[msg, StandardForm]
         ];            
@@ -97,7 +97,7 @@ neuralPrinter[assoc_Association] := If[!AssociationQ[Global`$EvaluationContext],
 
     Null;
   ,
-    Module[{generator, length, plot, Global`params, cellContent},
+    Module[{generator, length, plot, Global`params, Global`cellContent},
       associatedNets[callId] = Function[{data, p}, 
           PlotlyExtendTraces[plot, <|"y" -> {Drop[data, length]}|>, {0}];
           length = Length[data];
@@ -116,7 +116,7 @@ neuralPrinter[assoc_Association] := If[!AssociationQ[Global`$EvaluationContext],
         assoc["RoundLoss"], assoc["LearningRate"]
       };
 
-      cellContent = ToString[{
+      Global`cellContent = ToString[{
         {Style["Target device", 10], Style[assoc["TargetDevice"], Italic, 10]} // Row,
         {{
           TextView[Global`params[[1]] // Offload, "Label"->"Time elapsed", ImageSize->100],
@@ -134,7 +134,7 @@ neuralPrinter[assoc_Association] := If[!AssociationQ[Global`$EvaluationContext],
         |>]
       } // Column, StandardForm];
     
-      EditorView[cellContent // Offload]
+      EditorView[Global`cellContent // Offload]
 
     ]
     
