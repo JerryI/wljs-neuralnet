@@ -103,8 +103,8 @@ neuralPrinter[assoc_Association] := If[!AssociationQ[Global`$EvaluationContext],
           length = Length[data];
           Global`params = p;
 
-          If[p[[2]] < 0.1,
-            cellContent = ToString[Style["Complete", Background->LightGreen], StandardForm];
+          If[p[[2]] < 3,
+            Global`cellContent = ToString[Style["Complete", Background->LightGreen], StandardForm];
             associatedNets[callId] = Null;
           ];
       ];
