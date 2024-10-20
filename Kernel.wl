@@ -47,6 +47,42 @@ applyPatch := With[{},
             ]
         ];  
 
+    Unprotect[NeuralNetworks`Private`DefineDecoder`MakeEncoderBoxes];
+    ClearAll[NeuralNetworks`Private`DefineDecoder`MakeEncoderBoxes];
+
+    NeuralNetworks`Private`DefineEncoder`MakeEncoderBoxes[l_] := With[{keys = Select[Keys[l[[All]]], (Head[l[[#]]] =!= NumericArray && ByteCount[l[[#]]] < 1024)&]}, Module[{above, below},
+            above = Table[{
+              {BoxForm`SummaryItem[{StringJoin[k, ": "], l[[k]]}]}
+            }, {k, keys}];
+
+            BoxForm`ArrangeSummaryBox[
+               Head[l], (* head *)
+               l,      (* interpretation *)
+               None,    (* icon, use None if not needed *)
+               (* above and below must be in a format suitable for Grid or Column *)
+               above,    (* always shown content *)
+               Null (* expandable content. Currently not supported!*)
+            ]
+        ] ];
+
+    Unprotect[NeuralNetworks`Private`DefineDecoder`MakeDecoderBoxes];
+    ClearAll[NeuralNetworks`Private`DefineDecoder`MakeDecoderBoxes];
+
+    NeuralNetworks`Private`DefineDecoder`MakeDecoderBoxes[l_] := With[{keys = Select[Keys[l[[All]]], (Head[l[[#]]] =!= NumericArray && ByteCount[l[[#]]] < 1024)&]}, Module[{above, below},
+            above = Table[{
+              {BoxForm`SummaryItem[{StringJoin[k, ": "], l[[k]]}]}
+            }, {k, keys}];
+
+            BoxForm`ArrangeSummaryBox[
+               Head[l], (* head *)
+               l,      (* interpretation *)
+               None,    (* icon, use None if not needed *)
+               (* above and below must be in a format suitable for Grid or Column *)
+               above,    (* always shown content *)
+               Null (* expandable content. Currently not supported!*)
+            ]
+        ] ];
+
     NeuralNetworks`Private`MakeLayerBoxes[l_] := With[{keys = Select[Keys[l[[All]]], (Head[l[[#]]] =!= NumericArray && ByteCount[l[[#]]] < 1024)&]}, Module[{above, below},
             above = Table[{
               {BoxForm`SummaryItem[{StringJoin[k, ": "], l[[k]]}]}
