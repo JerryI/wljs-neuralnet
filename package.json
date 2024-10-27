@@ -1,6 +1,6 @@
 {
     "name": "wljs-neuralnet",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "A helper library for boxes and interactive output for NeuralNet standard package",
     "scripts": {
       "build": "node --max-old-space-size=8192 ./node_modules/.bin/rollup --config rollup.config.mjs",

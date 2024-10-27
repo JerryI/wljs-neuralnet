@@ -21,11 +21,11 @@ Internal`AddHandler["GetFileEvent",
 
 applyPatch := With[{},
   Unprotect[NetTrain];
-  SetOptions[NetTrain, TrainingProgressMeasurements -> Automatic, 
+  SetOptions[NetTrain, 
     TrainingProgressReporting->Function[assoc, 
         neuralPrinter[AssociationMap[assoc[#]&, {"RoundLoss", "Net", "TimeElapsed","TimeRemaining", "TargetDevice", "LearningRate", "RoundLossList"}]
     ]
-  ] ];
+  ] ] // Quiet;
 
     Unprotect[NeuralNetworks`Private`MakeLayerBoxes];
     ClearAll[NeuralNetworks`Private`MakeLayerBoxes];
