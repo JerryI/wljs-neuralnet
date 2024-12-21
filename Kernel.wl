@@ -133,34 +133,34 @@ neuralPrinter[assoc_Association] := If[!AssociationQ[Global`$EvaluationContext],
 
     Null;
   ,
-    Module[{generator, length, plot, Global`params, Global`cellContent},
+    Module[{generator, length, plot, System`params, System`cellContent},
       associatedNets[callId] = Function[{data, p}, 
           PlotlyExtendTraces[plot, <|"y" -> {Drop[data, length]}|>, {0}];
           length = Length[data];
-          Global`params = p;
+          System`params = p;
 
           If[p[[2]] < 3,
-            Global`cellContent = ToString[Style["Complete", Background->LightGreen], StandardForm];
+            System`cellContent = ToString[Style["Complete", Background->LightGreen], StandardForm];
             associatedNets[callId] = Null;
           ];
       ];
 
       length = Length[assoc["RoundLossList"]];
 
-      Global`params = {
+      System`params = {
         assoc["TimeElapsed"], assoc["TimeRemaining"],
         assoc["RoundLoss"], assoc["LearningRate"]
       };
 
-      Global`cellContent = ToString[{
+      System`cellContent = ToString[{
         {Style["Target device", 10], Style[assoc["TargetDevice"], Italic, 10]} // Row,
         {{
-          TextView[Global`params[[1]] // Offload, "Label"->"Time elapsed", ImageSize->100],
-          TextView[Global`params[[2]] // Offload, "Label"->"Time remaining", ImageSize->100]
+          TextView[System`params[[1]] // Offload, "Label"->"Time elapsed", ImageSize->100],
+          TextView[System`params[[2]] // Offload, "Label"->"Time remaining", ImageSize->100]
         },
         {
-          TextView[Global`params[[3]] // Offload, "Label"->"Round loss", ImageSize->100],
-          TextView[Global`params[[4]] // Offload, "Label"->"Learning rate", ImageSize->100]  
+          TextView[System`params[[3]] // Offload, "Label"->"Round loss", ImageSize->100],
+          TextView[System`params[[4]] // Offload, "Label"->"Learning rate", ImageSize->100]  
         }} // Grid,
         plot = Plotly[<|
           "y" -> assoc["RoundLossList"],
@@ -170,7 +170,7 @@ neuralPrinter[assoc_Association] := If[!AssociationQ[Global`$EvaluationContext],
         |>]
       } // Column, StandardForm];
     
-      EditorView[Global`cellContent // Offload]
+      EditorView[System`cellContent // Offload]
 
     ]
     
